@@ -6,11 +6,6 @@ const chatContainer = document.querySelector('#chat_container');
 // Select the dropdown element by its name attribute
 const categoryDropdown = document.querySelector('select[name="category"]');
 
-// Get the selected value from the dropdown
-
-// Now you can use the selected value as needed
-console.log("Selected category:", selectedCategory);
-
 let loadInterval;
 
 function loader(element) {

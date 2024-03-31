@@ -39,9 +39,8 @@ function generateRandomPrompt() {
     const pose = poses[Math.floor(Math.random() * poses.length)];
     const time = times[Math.floor(Math.random() * times.length)];
     const weather = weather_conditions[Math.floor(Math.random() * weather_conditions.length)];
-    const randomPrompt = `A man with ${pose} in the ${time} ${weather} in a famous place`;
+    const randomPrompt = ` ${pose} in the ${time} ${weather} in a famous place`;
     console.log('Random Prompt:', randomPrompt);
-
     return randomPrompt
 }
 
@@ -53,21 +52,20 @@ app.get('/', async (req, res) => {
 
 app.post('/', async (req, res) => {
 	try{
-                const randomPrompt = generateRandomPrompt();
-		const userPrompt = req.body.prompt;
-
-                const model = genAI.getGenerativeModel({ model: "gemini-pro"});
-                const prompt = `${randomPrompt} Can you change this prompt better for creating appropriate images using stable diffusion? The prompt should have a man and the city or place ${userPrompt}. Also, fix the prompt in case the weather is not appropriate with time or place.`
-
-                const result = await model.generateContent(prompt);
+        const userPrompt = req.body.prompt;
+        const userType = req.body.person;
+        const randomPrompt = generateRandomPrompt();
+        const model = genAI.getGenerativeModel({ model: "gemini-pro"});
+        const prompt = `${randomPrompt} Can you change this prompt better for creating appropriate images using stable diffusion? The prompt should have ${userType} and the city or place ${userPrompt}. Also, fix the prompt in case the weather is not appropriate with time or place.`
+        const result = await model.generateContent(prompt);
 		const responseG = await result.response;
-    		const refinedPrompt = await responseG.text();
-    		console.log(refinedPrompt);
-                console.log('Refined Prompt: ', refinedPrompt);
-                const formData = new FormData();
-                formData.append('prompt', `${refinedPrompt} ${userPrompt}`);
-                formData.append('output_format', 'webp')
-                const response = await axios.post(`https://api.stability.ai/v2beta/stable-image/generate/core`,
+        const refinedPrompt = await responseG.text();
+        console.log(refinedPrompt);
+        console.log('Refined Prompt: ', refinedPrompt);
+        const formData = new FormData();
+        formData.append('prompt', `${refinedPrompt} ${userPrompt}`);
+        formData.append('output_format', 'webp')
+        const response = await axios.post(`https://api.stability.ai/v2beta/stable-image/generate/core`,
             formData,
             {
                 headers: {
