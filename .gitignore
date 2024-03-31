@@ -61,9 +61,18 @@ local_settings.py
 db.sqlite3
 db.sqlite3-journal
 
+<<<<<<< HEAD
+node_modules
+dist
+dist-ssr
+*.local
+*.env
+.env
+=======
 # Flask stuff:
 instance/
 .webassets-cache
+>>>>>>> parent of e2d86c8 (edit gitignore)
 
 # Scrapy stuff:
 .scrapy

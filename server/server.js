@@ -8,7 +8,7 @@ import FormData from 'form-data';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 dotenv.config();
 
-const genAI = new GoogleGenerativeAI(process.env.API_KEY);
+const genAI = new GoogleGenerativeAI(process.env.GEMINIPRO_API_KEY);
 
 const app = express();
 
@@ -69,7 +69,7 @@ app.post('/', async (req, res) => {
             formData,
             {
                 headers: {
-                    Authorization: `Bearer sk-SEsR3ZPzdBvxPCwOR7q2qASlzyjlhhZo74baYRWXVp9Evqcb`,
+                    Authorization: `Bearer ${process.env.STABILITYAI_API_KEY}`,
                     Accept: 'image/*',
                 },
                 responseType: 'arraybuffer'
